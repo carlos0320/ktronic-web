@@ -1,29 +1,78 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
+    meta: {
+      isPublic: false,
+    },
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+    meta: {
+      isPublic: true,
+    },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/Register.vue"),
+    meta: {
+      isPublic: true,
+    },
+  },
+  {
+    path: "/roles",
+    name: "Roles",
+    component: () => import("../views/Roles/Roles.vue"),
+    meta: {
+      isPublic: false
+    }
+  },
+  {
+    path: "/roles/add",
+    name: "AddRoles",
+    component: () => import("../views/Roles/AddRoles.vue"),
+    meta: {
+      isPublic: false
+    }
+  },
+  {
+    path: "/roles/updated/:idRol",
+    name: "UpdatedRoles",
+    
+    component: () => import("../views/Roles/UpdatedRoles.vue"),
+    meta: {
+      isPublic: false
+    }
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("userApp");
+  if (to.matched.some((record) => !record.meta.isPublic)) {
+    if (!token) {
+      next({
+        path: "/login",
+      });
+    }
+    next();
+  }
+  next();
+});
+
+export default router;
