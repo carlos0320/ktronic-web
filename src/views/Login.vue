@@ -20,7 +20,8 @@
 </template>
 
 <script>
-const axios = require("axios");
+import userService from '../services/Users/index'
+
 export default {
   name: "Login",
   data() {
@@ -41,10 +42,8 @@ export default {
           password: this.password,
         };
         console.log("Vamos a imprimir el usuario", user);
-        const userLogin = await axios.post(
-          "http://localhost:3000/api/users/login",
-          user
-        );
+        const userLogin = await userService.login(user);
+        
         console.log(
           "Imprimir usuario registrado en la base de datos",
           userLogin

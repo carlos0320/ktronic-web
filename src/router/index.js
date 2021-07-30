@@ -29,6 +29,31 @@ const routes = [
       isPublic: true,
     },
   },
+  {
+    path: "/roles",
+    name: "Roles",
+    component: () => import("../views/Roles/Roles.vue"),
+    meta: {
+      isPublic: false
+    }
+  },
+  {
+    path: "/roles/add",
+    name: "AddRoles",
+    component: () => import("../views/Roles/AddRoles.vue"),
+    meta: {
+      isPublic: false
+    }
+  },
+  {
+    path: "/roles/updated/:idRol",
+    name: "UpdatedRoles",
+    
+    component: () => import("../views/Roles/UpdatedRoles.vue"),
+    meta: {
+      isPublic: false
+    }
+  },
 ];
 
 const router = new VueRouter({
