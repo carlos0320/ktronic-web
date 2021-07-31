@@ -8,4 +8,8 @@ userService.login = async ( users ) =>{
     return await axios.post(`${baseUrl}/api/users/login`,users)
 }
 
+userService.register = async ( users ) => {
+    return await axios.post(`${baseUrl}/api/users/login`,users)
+}
+
 export default userService;
